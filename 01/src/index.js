@@ -1,35 +1,11 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer } from 'apollo-server';
+import { resolvers, typeDefs } from './graphql/schema';
+import { context } from './graphql/context';
 
 const server = new ApolloServer({
-  typeDefs: gql`
-    type Query {
-      user: User!
-      users: [User!]!
-    }
-
-    type User {
-      id: ID!
-      userName: String!
-    }
-  `,
-  resolvers: {
-    Query: {
-      user() {
-        return {
-          id: '1sadasd',
-          userName: 'John Doe',
-        };
-      },
-      users() {
-        return [
-          {
-            id: '1sadasd',
-            userName: 'John Doe',
-          },
-        ];
-      },
-    },
-  },
+  typeDefs,
+  resolvers,
+  context,
 });
 
 server.listen(4003).then(({ url }) => {
